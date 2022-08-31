@@ -2,7 +2,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { io } from "socket.io-client";
 
-const socket = io("https://realtime-chat-dev.herokuapp.com/");
+const socket = io("https://realtime-chat-dev.herokuapp.com");
 let userDetails = {}
 const joinedChatCss = {
   backgroundColor: 'transparent',
