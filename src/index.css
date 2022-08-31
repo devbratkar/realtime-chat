@@ -1,4 +1,5 @@
 body {
+  box-sizing: border-box;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +11,115 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.rightChatbox {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.leftChatbox {
+  text-align: left;
+  margin-left: 10px;
+}
+
+.rightChatbox,
+.leftChatbox {
+  padding: 5px 10px;
+  margin-top: 10px;
+  width: max-content;
+  background-color: #E94560;
+  border-radius: 5px
+}
+
+.chatContainer,
+.container {
+  height: 90vh;
+  background-color: #16213E;
+  width: 80%;
+  box-sizing: border-box;
+  margin: 20px auto;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatContainer {
+  overflow-y: scroll;
+  width: 95%;
+  flex: 10;
+  margin-bottom: 0;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(84, 84, 84);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(54, 54, 54);
+}
+
+.msgContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  bottom: 0;
+}
+
+.right {
+  flex-direction: row-reverse;
+}
+
+.left {
+  flex-direction: row;
+}
+
+.sendMsgForm {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  /* padding: 20px; */
+}
+
+.sendMsgForm input {
+  flex: 5;
+  margin: auto 10px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 5px #0F3460;
+  padding: 10px 10px;
+}
+
+.sendMsgForm button {
+  flex: 1;
+  margin: auto 10px;
+  border-radius: 5px;
+  padding: 11px 0;
+  border: none;
+  background-color: #0F3460;
+  color: white;
+}
+
+.username {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.455);
+}
+
+.joinedMsg {
+  background-color: red !important;
 }

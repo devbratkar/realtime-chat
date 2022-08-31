@@ -1,24 +1,115 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import { io } from "socket.io-client";
 
+const socket = io("https://realtime-chat-dev.herokuapp.com/");
+let userDetails = {}
+const joinedChatCss = {
+  backgroundColor: 'transparent',
+  color: 'grey',
+  opacity: '0.5',
+  width: '100%',
+  textAlign: 'center',
+}
 function App() {
+  const [userInput, setUserInput] = useState({})
+  const [toggle, setToggle] = useState(false)
+  const [input, setInput] = useState('')
+  const [message, setMessage] = useState([])
+
+  const joinChatInputHandler = (e) => {
+    setUserInput(e.target.value)
+  }
+  const sendHandler = (e) => {
+    e.preventDefault()
+    setMessage(p => {
+      if (input === '') {
+        return [...p]
+      }
+      return [...p, { name: userDetails.name, msg: input }]
+    })
+    socket.emit('message', input)
+    setInput('')
+  }
+  // const logoutHandler = () => {
+  //   setToggle(false)
+  // }
+  useEffect(() => {
+    if (toggle) {
+      let chat = document.querySelector('.chatContainer')
+      chat.scrollTo(0, chat.scrollHeight)
+    }
+  })
+
+  const joinChatHandler = (e) => {
+    e.preventDefault()
+    setUserInput('')
+    socket.emit('join_room', userInput)
+
+    socket.on("user_joined_msg", user => {
+      userDetails = { ...user }
+      setMessage(p => {
+        const msg = user.name + ' joined the chat'
+        return [...p, { msg, joined: true }]
+      })
+    })
+    setToggle(true)
+  }
+
+  useEffect(() => {
+    socket.on("msg", msg => {
+      setMessage(p => {
+        return [...p, msg]
+      })
+    })
+
+  }, [])
+
+  function checkId(id) {
+    if (id === userDetails.socketId) return true;
+    return false
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      {!toggle && <form onSubmit={joinChatHandler} className='sendMsgForm'>
+        <input type={'text'} placeholder="Enter your name" onChange={joinChatInputHandler} />
+        <button type='submit'>Join Chat</button>
+      </form>}
+      {toggle &&
+        <>
+
+          <div className='container'>
+            <div className='chatContainer'>
+              {message.map((item, i) => {
+                return (
+                  <div className={checkId(item.name?.id) ? `right msgContainer` : `left msgContainer`} key={i}>
+                    <div
+                      className={checkId(item.name?.id) ? `rightChatbox` : `leftChatbox`}
+                      style={item.joined ? { ...joinedChatCss } : {}}
+                    >
+                      <div className='username'>
+                        {item.name?.name}
+                      </div>
+                      <div>
+                        {item.msg}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            <form onSubmit={sendHandler} className='sendMsgForm'>
+              <input type={'text'} placeholder='Enter your message' value={input} onChange={(e) => setInput(e.target.value)} />
+              <button>Send</button>
+              {/* <button onClick={logoutHandler}>Logout</button> */}
+              <br />
+            </form>
+          </div>
+
+        </>
+      }
+    </div >
   );
 }
 
