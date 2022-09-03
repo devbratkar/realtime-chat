@@ -1,3 +1,8 @@
+:root {
+  --navHeight: 60px;
+  --chatBG: #16213E;
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
@@ -32,27 +37,27 @@ code {
   border-radius: 5px
 }
 
+
 .chatContainer,
 .container {
-  height: 90vh;
+  height: 95%;
   background-color: #16213E;
-  width: 80%;
+  width: 100%;
   box-sizing: border-box;
-  margin: 20px auto;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
 }
 
 .chatContainer {
   overflow-y: scroll;
-  width: 95%;
+  padding: 20px;
+  width: 100%;
   flex: 10;
   margin-bottom: 0;
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 0px;
 }
 
 /* Track */
@@ -93,6 +98,7 @@ code {
   display: flex;
   flex-direction: row;
   margin-top: 15px;
+  margin-bottom: 10px;
   /* padding: 20px; */
 }
 
@@ -122,4 +128,51 @@ code {
 
 .joinedMsg {
   background-color: red !important;
+}
+
+.togglePage {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* CSS FOR USER CHAT ROUTE */
+.userChatContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  height: var(--navHeight);
+}
+
+.chatDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.chatSidebar {
+  flex: 1;
+  background-color: white;
+  height: calc(100vh - var(--navHeight));
+}
+
+.chatScreen {
+  flex: 3;
+  background-color: var(--chatBG);
+  height: calc(100vh - var(--navHeight));
+
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.userImage img {
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 20px
+}
+
+.usernameList_email {
+  color: grey;
+  font-size: 0.85rem;
 }
