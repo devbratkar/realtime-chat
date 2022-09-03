@@ -1,0 +1,30 @@
+GET http://localhost:3002/    
+
+###
+GET  http://localhost:3002/auth/users
+
+###
+POST http://localhost:3002/auth/signup
+Content-Type: application/json
+
+{
+     "name": "Kaveri Kar",
+     "email": "k.kar@gmail.com",
+     "tel": "7999591254",
+     "password": "abcdef"
+}
+
+###
+
+POST http://localhost:3002/auth/login
+Content-Type: application/json
+
+{
+     "username": "devbrat.kar.5@gmail.com",
+     "password": ""
+}
+
+###
+
+
+
