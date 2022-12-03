@@ -6,6 +6,8 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 const bp = require('body-parser')
 const AuthRoute = require('./routes/auth')
+const ChatRoute = require('./routes/chat')
+
 
 app.use(bp.urlencoded({ extended: true }))
 app.use(bp.json())
@@ -32,6 +34,7 @@ app.get('/users', (req, res) => {
 })
 
 app.use('/auth', AuthRoute)
+app.use('/chat', ChatRoute)
 
 const server = http.createServer(app);
 

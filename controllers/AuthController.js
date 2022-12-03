@@ -42,12 +42,13 @@ const login = (req, res, next) => {
                               })
                          }
                          if (result) {
-                              let token = jwt.sign({ name: user.name }, 'awd12*-?><]0=+abc', { expiresIn: '1hr' })
+                              let token = jwt.sign({ id: user._id, name: user.name, email: user.email, tel: user.tel }, 'awd12*-?><]0=+abc', { expiresIn: '1hr' })
                               res.json({
                                    message: 'Login Success !',
                                    name: user.name,
                                    email: user.email,
                                    tel: user.tel,
+                                   id: user._id,
                                    token
                               })
                          } else {
@@ -70,7 +71,9 @@ const login = (req, res, next) => {
 }
 
 const allUsers = (req, res, next) => {
-     User.find({}).then(users => {
+     const token = req.headers.token
+     const user = jwt.verify(token, 'awd12*-?><]0=+abc')
+     User.find({ email: { $ne: user.email }, tel: { $ne: user.tel } }).populate("chats").then(users => {
           try {
                const userDetails = []
                users.forEach(item => {
