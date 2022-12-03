@@ -42,9 +42,10 @@ export default function Login({ login, user }) {
                password
           }).then(res => {
                if (res.data.token) {
-                    const { name, email, tel, token } = res.data
+                    console.log(res)
+                    const { id, name, email, tel, token } = res.data
                     sessionStorage.setItem('user', JSON.stringify({
-                         name, email, tel, token
+                         id, name, email, tel, token
                     }))
                     login(true)
                     user(name)
